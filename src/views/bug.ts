@@ -5,7 +5,7 @@ type BugOption = {} & Omit<g.SpriteParameterObject, 'src'>
 export class Bug extends g.Sprite {
   constructor (opts: BugOption) {
     super({
-      src: image(opts.scene, '/assets/main/bug.png'),
+      src: image(opts.scene, '/assets/main/bug_generated.png'),
       ...opts
     })
   }

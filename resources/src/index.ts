@@ -1,17 +1,20 @@
 import { application } from './utils/application'
 import { createBitmapFont } from './assets/bitmapFont'
 import { render } from './utils/render'
-import FontFaceObserver from 'fontfaceobserver'
+import { createBug } from './assets/bug'
+import { loadFont } from './utils/font'
+import { loadImage } from './utils/loader';
 
-const app = application()
+(async () => {
+  const app = application()
+  await loadFont()
+  await loadImage()
 
-const font = new FontFaceObserver('mplus')
-
-font.load().then(() => {
+  render(app, createBug({ name: 'assets/main/bug' }))
   render(app, createBitmapFont({
     name: 'assets/shared/number',
     color: 0x000000,
     chars: '0123456789',
     size: 40
   }))
-})
+})()

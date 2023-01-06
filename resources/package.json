@@ -5,6 +5,7 @@
   "author": "yasshi2525",
   "license": "MIT License",
   "scripts": {
+    "debug": "ts-node src/debug.ts",
     "start": "ts-node src/crawler.ts"
   },
   "devDependencies": {

@@ -1,7 +1,8 @@
 import { Server } from './server'
 import puppeteer from 'puppeteer'
 import fs from 'fs'
-import path from 'path';
+import path from 'path'
+import { listImages } from './utils/io';
 
 (async () => {
   const server = new Server()
@@ -11,7 +12,8 @@ import path from 'path';
     headless: true
   })
   const page = await browser.newPage()
-  await page.goto('http://localhost:8080/?download=1')
+  const list = await listImages()
+  await page.goto('http://localhost:8080/?download=1&images=' + list.join(','))
   await page.waitForSelector('a')
 
   const ls = await page.evaluate(() => {

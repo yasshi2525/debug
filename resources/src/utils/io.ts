@@ -1,4 +1,4 @@
-import * as fs from 'fs'
+import fs from 'fs'
 
 export const listImages = (): Promise<string[]> => {
   return new Promise((resolve, reject) => {

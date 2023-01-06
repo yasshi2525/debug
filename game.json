@@ -18,6 +18,12 @@
 		"assets/shared/number_generated.json": {
 			"type": "text",
 			"path": "assets/shared/number_generated.json"
+		},
+		"assets/main/bug_generated.png": {
+			"type": "image",
+			"path": "assets/main/bug_generated.png",
+			"width": 100,
+			"height": 100
 		}
 	},
 	"moduleMainScripts": {},
