@@ -1,12 +1,15 @@
 import { GameMainParameterObject, RPGAtsumaruWindow } from './parameterObject'
+import { GameManager } from './managers/gameManager'
+import { RectangleField } from './geo/rectangle'
+import { Bounds } from './utils/bounds'
 
 declare const window: RPGAtsumaruWindow
 
 export function main (param: GameMainParameterObject): void {
   const scene = new g.Scene({
     game: g.game,
-    // このシーンで利用するアセットのIDを列挙し、シーンに通知します
-    assetIds: ['player', 'shot', 'se']
+    name: 'main',
+    assetPaths: ['/assets/main/**/*']
   })
 
   let time = 60 // 制限時間
@@ -17,32 +20,19 @@ export function main (param: GameMainParameterObject): void {
   g.game.vars.gameState = { score: 0 }
   scene.onLoad.add(() => {
     // ここからゲーム内容を記述します
-
-    // 各アセットオブジェクトを取得します
-    const playerImageAsset = scene.asset.getImageById('player')
-    const shotImageAsset = scene.asset.getImageById('shot')
-    const seAudioAsset = scene.asset.getAudioById('se')
-
-    // プレイヤーを生成します
-    const player = new g.Sprite({
+    const field = new RectangleField({
+      initialBounds: new Bounds(100, 100, 600, 600)
+    })
+    const gameLayer = new g.E({ scene, tag: 'game' })
+    scene.append(gameLayer)
+    const gameManager = new GameManager({
       scene,
-      src: playerImageAsset,
-      width: playerImageAsset.width,
-      height: playerImageAsset.height
+      layer: gameLayer,
+      field,
+      initialBugNumber: 6,
+      incrementIntervalTick: 30
     })
-
-    // プレイヤーの初期座標を、画面の中心に設定します
-    player.x = (g.game.width - player.width) / 2
-    player.y = (g.game.height - player.height) / 2
-    player.onUpdate.add(() => {
-      // 毎フレームでY座標を再計算し、プレイヤーの飛んでいる動きを表現します
-      // ここではMath.sinを利用して、時間経過によって増加するg.game.ageと組み合わせて
-      player.y = (g.game.height - player.height) / 2 + Math.sin(g.game.age % (g.game.fps * 10) / 4) * 10
-
-      // プレイヤーの座標に変更があった場合、 modified() を実行して変更をゲームに通知します
-      player.modified()
-    })
-    scene.append(player)
+    gameManager.start()
 
     // フォントの生成
     const font = new g.DynamicFont({
@@ -57,7 +47,8 @@ export function main (param: GameMainParameterObject): void {
       text: 'SCORE: 0',
       font,
       fontSize: font.size / 2,
-      textColor: 'black'
+      textColor: 'black',
+      tag: 'score'
     })
     scene.append(scoreLabel)
 
@@ -68,43 +59,11 @@ export function main (param: GameMainParameterObject): void {
       font,
       fontSize: font.size / 2,
       textColor: 'black',
-      x: 0.65 * g.game.width
+      x: 0.65 * g.game.width,
+      tag: 'time'
     })
     scene.append(timeLabel)
 
-    // 画面をタッチしたとき、SEを鳴らします
-    scene.onPointDownCapture.add(() => {
-      // 制限時間以内であればタッチ1回ごとにSCOREに+1します
-      if (time > 0) {
-        g.game.vars.gameState.score++
-        scoreLabel.text = 'SCORE: ' + g.game.vars.gameState.score
-        scoreLabel.invalidate()
-      }
-      seAudioAsset.play()
-
-      // プレイヤーが発射する弾を生成します
-      const shot = new g.Sprite({
-        scene,
-        src: shotImageAsset,
-        width: shotImageAsset.width,
-        height: shotImageAsset.height
-      })
-
-      // 弾の初期座標を、プレイヤーの少し右に設定します
-      shot.x = player.x + player.width
-      shot.y = player.y
-      shot.onUpdate.add(() => {
-        // 毎フレームで座標を確認し、画面外に出ていたら弾をシーンから取り除きます
-        if (shot.x > g.game.width) shot.destroy()
-
-        // 弾を右に動かし、弾の動きを表現します
-        shot.x += 10
-
-        // 変更をゲームに通知します
-        shot.modified()
-      })
-      scene.append(shot)
-    })
     const updateHandler = (): void => {
       if (time <= 0) {
         // ゲームアツマール環境であればランキングを表示します

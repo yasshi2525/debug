@@ -113,6 +113,14 @@ export class Bounds {
     return this.bounds.y + this.bounds.width
   }
 
+  width () {
+    return this.bounds.width
+  }
+
+  height () {
+    return this.bounds.height
+  }
+
   private modify () {
     if (!validate(this.bounds.x) || !validate(this.bounds.y) || !validate(this.bounds.width) || !validate(this.bounds.height)) {
       throw new Error(`invalid bounds: ${this.bounds}`)

@@ -30,7 +30,7 @@ class AkashicEnvironment extends NodeEnvironment {
   }
 
   async teardown () {
-    this.global.context.destroy()
+    await this.global.context.destroy()
     delete this.global.context
     delete this.global.client
     delete this.global.g.game

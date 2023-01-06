@@ -4,7 +4,7 @@
     "outDir": "../../dist"
   },
   "include": [
-    "./types/global.ts",
+    "./global.ts",
     "**/*.ts"
   ]
 }
