@@ -7,7 +7,7 @@
     "postinstall": "npm run build",
     "build": "rimraf ./script && esbuild --bundle src/_bootstrap.ts --platform=node --outfile=script/index.js && akashic scan asset script",
     "watch": "esbuild --watch --bundle src/_bootstrap.ts --platform=node --outfile=script/index.js",
-    "update": "akashic scan asset && akashic scan globalScripts",
+    "update": "rimraf ./assets/**/*_generated.* && npm run start --prefix resources && akashic scan asset && akashic scan globalScripts",
     "lint": "eslint -c .eslintrc.js \"src/**/*.ts\" --fix",
     "start": "akashic-sandbox .",
     "export-zip": "rimraf game-all.zip && akashic export zip -o game.zip -s",

@@ -9,11 +9,15 @@
 			"path": "script/index.js",
 			"global": true
 		},
-		"assets/main/bug.png": {
+		"assets/shared/number_generated.png": {
 			"type": "image",
-			"path": "assets/main/bug.png",
-			"width": 512,
-			"height": 512
+			"path": "assets/shared/number_generated.png",
+			"width": 400,
+			"height": 49
+		},
+		"assets/shared/number_generated.json": {
+			"type": "text",
+			"path": "assets/shared/number_generated.json"
 		}
 	},
 	"moduleMainScripts": {},

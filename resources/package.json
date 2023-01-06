@@ -1,0 +1,26 @@
+{
+  "name": "debug-resources",
+  "private": true,
+  "version": "0.1.0",
+  "author": "yasshi2525",
+  "license": "MIT License",
+  "scripts": {
+    "start": "ts-node src/crawler.ts"
+  },
+  "devDependencies": {
+    "@types/fontfaceobserver": "^2.1.0",
+    "@types/node": "^18.11.18",
+    "@types/webpack": "^5.28.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "fontfaceobserver": "^2.3.0",
+    "html-webpack-plugin": "^5.5.0",
+    "pixi-filters": "^5.1.0",
+    "pixi.js": "^7.0.5",
+    "puppeteer": "^19.4.1",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
