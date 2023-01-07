@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "postinstall": "npm run build",
+    "postinstall": "npm run update && npm run build",
     "build": "rimraf ./script && esbuild --bundle src/_bootstrap.ts --platform=node --outfile=script/index.js && akashic scan asset script",
     "watch": "esbuild --watch --bundle src/_bootstrap.ts --platform=node --outfile=script/index.js",
     "update": "rimraf ./assets/**/*_generated.* && npm run start --prefix resources && akashic scan asset && akashic scan globalScripts",

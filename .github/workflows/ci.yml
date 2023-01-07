@@ -1,0 +1,23 @@
+name: Debug - CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - run: npm install
+      - run: npm test
+      - run: npm export-html
+      - run: VERSION=$(cat package.json | jq '.version' | tr -d '"')
+      - uses: actions/upload-artifact@v3
+        with:
+          name: debug-${{ env.VERSION }}.zip
+          path: game.zip
