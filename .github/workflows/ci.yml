@@ -22,6 +22,9 @@ jobs:
           restore-keys: node-
       - run: npm install
       - run: npm test
+      - uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: abb845a98ef666435c21ffa02771befa1e8aa618189b513130e046e8297bf68b
       - run: npm run export-html
       - run: unzip game.zip
       - run: echo "VERSION=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
