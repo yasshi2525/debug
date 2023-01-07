@@ -13,6 +13,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      - id: npm-cache-dir
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: node-
       - run: npm install
       - run: npm test
       - run: npm run export-html
