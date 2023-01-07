@@ -16,8 +16,9 @@ jobs:
       - run: npm install
       - run: npm test
       - run: npm run export-html
-      - run: VERSION=$(cat package.json | jq '.version' | tr -d '"')
+      - run: unzip game.zip
+      - run: echo "VERSION=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v3
         with:
-          name: debug-${{ env.VERSION }}.zip
-          path: game.zip
+          name: debug-${{ env.VERSION }}
+          path: game

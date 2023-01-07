@@ -1,4 +1,5 @@
 # typescript-shin-ichiba-ranking-game-sample
+[![Debug - CI](https://github.com/yasshi2525/debug/actions/workflows/ci.yml/badge.svg)](https://github.com/yasshi2525/debug/actions/workflows/ci.yml)
 
 **typescript-shin-ichiba-ranking-game-sample**はTypeScriptでAkashicのゲームを作る際のサンプルプロジェクトです。
 
