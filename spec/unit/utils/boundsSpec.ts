@@ -33,4 +33,17 @@ describe('bounds', () => {
     expect(obj.left()).toBe(1)
     expect(obj.right()).toBe(5)
   })
+
+  it.each([
+    ['左', -1, 0, false],
+    ['右', 2, 0, false],
+    ['上', 0, -1, false],
+    ['下', 0, 2, false],
+    ['中', 0.5, 0.5, true]
+  ])('contains (%s)', (_, x: number, y: number, expected: boolean) => {
+    const obj = new Bounds(0, 0, 1, 1)
+    expect(obj.contains(x, y)).toBe(expected)
+    expect(obj.contains({ x, y })).toBe(expected)
+    expect(obj.contains(new Point(x, y))).toBe(expected)
+  })
 })

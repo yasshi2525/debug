@@ -121,6 +121,28 @@ export class Bounds {
     return this.bounds.height
   }
 
+  contains(x: number, y: number): boolean
+  // eslint-disable-next-line no-dupe-class-members
+  contains(loc: Readonly<PointObject>): boolean
+  // eslint-disable-next-line no-dupe-class-members
+  contains(loc: Point): boolean
+
+  // eslint-disable-next-line no-dupe-class-members
+  contains (arg1: number | Readonly<PointObject> | Point, arg2?: number) {
+    if (arg1 instanceof Point) {
+      return this.left() <= arg1.getX() && arg1.getX() <= this.right() &&
+        this.top() <= arg1.getY() && arg1.getY() <= this.bottom()
+    } else if (isPointObject(arg1)) {
+      return this.left() <= arg1.x && arg1.x <= this.right() &&
+        this.top() <= arg1.y && arg1.y <= this.bottom()
+    } else if (arg2 != null) {
+      return this.left() <= arg1 && arg1 <= this.right() &&
+        this.top() <= arg2 && arg2 <= this.bottom()
+    } else {
+      throw new Error(`invalid arguments: ${arguments}`)
+    }
+  }
+
   private modify () {
     if (!validate(this.bounds.x) || !validate(this.bounds.y) || !validate(this.bounds.width) || !validate(this.bounds.height)) {
       throw new Error(`invalid bounds: ${this.bounds}`)
