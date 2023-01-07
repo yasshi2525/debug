@@ -6,14 +6,14 @@ import { listImages } from './utils/io';
 
 (async () => {
   const server = new Server()
-  await server.start()
+  const images = await listImages()
+  await server.start({ images })
 
   const browser = await puppeteer.launch({
     headless: true
   })
   const page = await browser.newPage()
-  const list = await listImages()
-  await page.goto('http://localhost:8080/?download=1&images=' + list.join(','))
+  await page.goto('http://localhost:8080/?download=1')
   await page.waitForSelector('a')
 
   const ls = await page.evaluate(() => {

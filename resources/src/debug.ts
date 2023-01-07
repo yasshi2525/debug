@@ -3,6 +3,6 @@ import { Server } from './server';
 
 (async () => {
   const server = new Server()
-  const list = await listImages()
-  await server.start(8081, `?images=${list.join(',')}`)
+  const images = await listImages()
+  await server.start({ images, port: 8081, open: true })
 })()
