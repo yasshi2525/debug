@@ -20,5 +20,5 @@ jobs:
       - run: echo "VERSION=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v3
         with:
-          name: debug-${{ env.VERSION }}
+          name: debug-v${{ env.VERSION }}
           path: game
