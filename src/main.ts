@@ -1,7 +1,9 @@
 import { GameMainParameterObject, RPGAtsumaruWindow } from './parameterObject'
-import { GameManager } from './managers/gameManager'
+import { GameManager } from './managers/game'
 import { RectangleField } from './geo/rectangle'
 import { Bounds } from './utils/bounds'
+import { FieldManager } from './managers/field'
+import { FieldCollision } from './geo/collision'
 
 declare const window: RPGAtsumaruWindow
 
@@ -21,10 +23,11 @@ export function main (param: GameMainParameterObject): void {
   scene.onLoad.add(() => {
     // ここからゲーム内容を記述します
     const field = new RectangleField({
-      initialBounds: new Bounds(100, 100, 600, 600)
+      initialBounds: new Bounds(100, 100, 600, 400)
     })
     const gameLayer = new g.E({ scene, tag: 'game' })
     scene.append(gameLayer)
+
     const gameManager = new GameManager({
       scene,
       layer: gameLayer,
@@ -32,7 +35,18 @@ export function main (param: GameMainParameterObject): void {
       initialBugNumber: 6,
       incrementIntervalTick: 30
     })
+
+    const collision = new FieldCollision({ field })
+    const fieldLayer = new g.E({ scene, tag: 'field' })
+    const fieldManager = new FieldManager({
+      layer: fieldLayer,
+      field,
+      collision
+    })
+    fieldManager.init(gameManager)
+
     gameManager.start()
+    fieldManager.start()
 
     // フォントの生成
     const font = new g.DynamicFont({

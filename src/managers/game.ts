@@ -10,6 +10,7 @@ type GameManagerOption = {
 }
 
 export class GameManager {
+  readonly onGenerated: g.Trigger<Bug> = new g.Trigger()
   private readonly scene: g.Scene
   private readonly field: RectangleField
   private readonly initialBugNumber: number
@@ -49,5 +50,6 @@ export class GameManager {
       y: b.top() + g.game.random.generate() * b.height()
     })
     this.layer.append(bug)
+    this.onGenerated.fire(bug)
   }
 }

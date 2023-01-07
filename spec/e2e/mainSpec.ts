@@ -20,4 +20,14 @@ describe('main', () => {
     expect(layer).toBeInstanceOf(g.E)
     expect(layer.children).toHaveLength(6)
   })
+
+  it('ゲーム時間が経過すると虫が動く', () => {
+    const layer = scene.children.find(e => e.tag === 'game')!
+    const bug1 = layer.children![0]
+    expect(bug1).toBeInstanceOf(g.Sprite)
+    const { x, y } = bug1
+    context.step()
+    expect(bug1.x).not.toBe(x)
+    expect(bug1.y).not.toBe(y)
+  })
 })

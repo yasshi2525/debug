@@ -1,7 +1,7 @@
 import { VertexObject } from '../../../src/geo/vertex'
 import { RectangleField } from '../../../src/geo/rectangle'
 import { Mover } from '../../../src/geo/mover'
-import { Collision } from '../../../src/geo/collision'
+import { FieldCollision } from '../../../src/geo/collision'
 
 describe('collision', () => {
   it.each([
@@ -13,7 +13,7 @@ describe('collision', () => {
     const field = new RectangleField({ initialBounds: { x: 0, y: 0, width: 100, height: 100 } })
     const vertex = new VertexObject()
     const mover = new Mover({ vertex, initialVelocity: { x: v1x, y: v1y } })
-    const collision = new Collision({ field })
+    const collision = new FieldCollision({ field })
     const { validate } = collision.add(mover)
     // まだ%name%にいける
     vertex.getLocation().set(x - v1x, y - v1y)

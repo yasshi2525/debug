@@ -1,15 +1,8 @@
 import { RectangleField } from '../../../src/geo/rectangle'
-import { GameManager } from '../../../src/managers/gameManager'
-import * as moduleResourceManager from '../../../src/managers/resourceManager'
+import { GameManager } from '../../../src/managers/game'
+import { prepare } from '../__helper/mock'
 
-jest.spyOn(moduleResourceManager, 'image').mockImplementation((scene, path) =>
-  client.createDummyImageAsset({
-    id: 'dummy-image-asset-id',
-    path,
-    width: 100,
-    height: 100
-  })
-)
+prepare()
 
 describe('gameManager', () => {
   let field: RectangleField

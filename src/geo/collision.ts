@@ -1,21 +1,21 @@
 import { RectangleField } from './rectangle'
-import { Mover } from './mover'
+import { Movable } from './mover'
 import { LinkedList } from '../utils/linkedList'
 
-type CollisionOption = {
+type FieldCollisionOption = {
   field: RectangleField
 }
 
-export class Collision {
+export class FieldCollision {
   private readonly field: RectangleField
-  private readonly objects: LinkedList<Mover>
+  private readonly objects: LinkedList<Movable>
 
-  constructor (opts: CollisionOption) {
+  constructor (opts: FieldCollisionOption) {
     this.field = opts.field
-    this.objects = new LinkedList<Mover>()
+    this.objects = new LinkedList<Movable>()
   }
 
-  add (mover: Mover) {
+  add (mover: Movable) {
     return {
       remove: this.objects.add(mover),
       validate: () => this._validate(mover)
@@ -26,7 +26,7 @@ export class Collision {
     this.objects.forEach(m => this._validate(m))
   }
 
-  private _validate (mover: Mover) {
+  private _validate (mover: Movable) {
     const area = this.field.getBounds()
     const pos = mover.getLocation().getLocation()
     const v = mover.getVelocity()
