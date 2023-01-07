@@ -1,10 +1,10 @@
 import { OutlineFilter } from 'pixi-filters'
-import { ImageSet } from '../utils/imageSet'
+import { SingleFrameAssets } from '../utils/frameAssets'
 import { Container, Text, TextStyle } from 'pixi.js'
 
 export const createBitmapFont = (
   opts: { name: string; chars: string; color: number; size: number; margin?: number }
-): ImageSet => {
+): SingleFrameAssets => {
   const margin = opts.margin ?? 0
   const container = new Container()
   const style = new TextStyle({
@@ -35,10 +35,6 @@ export const createBitmapFont = (
     data: container,
     width: opts.chars.length * (opts.size + margin * 2),
     height: container.height,
-    glyph,
-    size: {
-      width: opts.size + margin * 2,
-      height: container.height
-    }
+    glyph
   }
 }

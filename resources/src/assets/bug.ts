@@ -1,4 +1,4 @@
-import { ImageSet } from '../utils/imageSet'
+import { SingleFrameAssets } from '../utils/frameAssets'
 import { Container, Graphics, Sprite } from 'pixi.js'
 import { GlowFilter, KawaseBlurFilter, OutlineFilter } from 'pixi-filters'
 
@@ -8,7 +8,7 @@ const padding = (size - spriteSize) / 2
 
 export const createBug = (opts: {
   name: string
-}): ImageSet => {
+}): SingleFrameAssets => {
   const data = new Container()
   const circle = new Graphics()
   circle.lineStyle(1, 0xdc143c, 0.5)
@@ -32,7 +32,6 @@ export const createBug = (opts: {
     name: opts.name,
     data,
     width: size,
-    height: size,
-    size
+    height: size
   }
 }
