@@ -15,7 +15,7 @@ jobs:
           node-version: '18.x'
       - run: npm install
       - run: npm test
-      - run: npm export-html
+      - run: npm run export-html
       - run: VERSION=$(cat package.json | jq '.version' | tr -d '"')
       - uses: actions/upload-artifact@v3
         with:
