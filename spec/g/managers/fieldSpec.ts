@@ -35,4 +35,16 @@ describe('fieldManager', () => {
     expect(bug.x).not.toBe(50)
     expect(bug.y).not.toBe(50)
   })
+
+  it('虫が削除されると、stepの対象外になる', () => {
+    const manager = new FieldManager({ field, collision, layer })
+    manager.start()
+    const bug = new Bug({ scene, x: 50, y: 50 })
+    manager.add(bug)
+    context.step()
+    const { x, y } = bug.getLocation().getLocation().get()
+    bug.destroy()
+    context.step()
+    expect(bug.getLocation().getLocation().get()).toEqual({ x, y })
+  })
 })

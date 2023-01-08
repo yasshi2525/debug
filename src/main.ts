@@ -4,6 +4,7 @@ import { RectangleField } from './geo/rectangle'
 import { Bounds } from './utils/bounds'
 import { FieldManager } from './managers/field'
 import { FieldCollision } from './geo/collision'
+import { AttackManager } from './managers/attack'
 
 declare const window: RPGAtsumaruWindow
 
@@ -38,6 +39,8 @@ export function main (param: GameMainParameterObject): void {
 
     const collision = new FieldCollision({ field })
     const fieldLayer = new g.E({ scene, tag: 'field' })
+    scene.append(fieldLayer)
+
     const fieldManager = new FieldManager({
       layer: fieldLayer,
       field,
@@ -45,8 +48,14 @@ export function main (param: GameMainParameterObject): void {
     })
     fieldManager.init(gameManager)
 
+    const attackerLayer = new g.E({ scene, tag: 'attacker' })
+    scene.append(attackerLayer)
+    const attackManager = new AttackManager({ scene, field, layer: attackerLayer })
+    attackManager.init(gameManager)
+
     gameManager.start()
     fieldManager.start()
+    attackManager.start()
 
     // フォントの生成
     const font = new g.DynamicFont({

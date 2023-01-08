@@ -24,6 +24,12 @@
 			"path": "assets/main/bug_generated.png",
 			"width": 100,
 			"height": 100
+		},
+		"assets/main/attacker_generated.png": {
+			"type": "image",
+			"path": "assets/main/attacker_generated.png",
+			"width": 2000,
+			"height": 100
 		}
 	},
 	"moduleMainScripts": {},

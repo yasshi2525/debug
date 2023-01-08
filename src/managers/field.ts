@@ -38,8 +38,12 @@ export class FieldManager {
   }
 
   add (bug: Bug) {
-    this.bugs.add(bug)
-    this.collision.add(bug)
+    const removeLocal = this.bugs.add(bug)
+    const { remove } = this.collision.add(bug)
+    bug.onDestroy.addOnce(() => {
+      removeLocal()
+      remove()
+    })
   }
 
   private step () {

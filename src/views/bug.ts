@@ -6,6 +6,7 @@ import { Point } from '../utils/point'
 type BugOption = {} & Omit<g.SpriteParameterObject, 'src'>
 
 export class Bug extends g.Sprite implements Movable {
+  readonly onDestroy: g.Trigger<void>
   private readonly engine: Mover
 
   constructor (opts: BugOption) {
@@ -13,6 +14,7 @@ export class Bug extends g.Sprite implements Movable {
       src: image(opts.scene, '/assets/main/bug_generated.png'),
       ...opts
     })
+    this.onDestroy = new g.Trigger()
     this.engine = new Mover({
       vertex: new VertexObject({
         initialLocation: new Point(this.x, this.y)
@@ -37,5 +39,10 @@ export class Bug extends g.Sprite implements Movable {
 
   getVelocity () {
     return this.engine.getVelocity()
+  }
+
+  destroy (destroySurface?: boolean) {
+    super.destroy(destroySurface)
+    this.onDestroy.fire()
   }
 }
