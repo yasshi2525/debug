@@ -40,6 +40,7 @@ export const renderMulti = (app: Application, opts: MultiFrameAssets) => {
   const appMulti = application()
   appMulti.renderer.resize(opts.srcWidth, opts.srcHeight)
   let frames = 0
+  appMulti.ticker.maxFPS = 30
   appMulti.ticker.add(() => {
     appMulti.stage.removeChildren()
     appMulti.stage.addChild(opts.tick(frames))

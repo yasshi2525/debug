@@ -2,12 +2,10 @@ import { Server } from './server'
 import puppeteer from 'puppeteer'
 import fs from 'fs'
 import path from 'path'
-import { listImages } from './utils/io';
 
 (async () => {
   const server = new Server()
-  const images = await listImages()
-  await server.start({ images })
+  await server.start()
 
   const browser = await puppeteer.launch({
     headless: true

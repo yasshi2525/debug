@@ -14,6 +14,7 @@ export const createBug = (opts: {
   circle.lineStyle(1, 0xdc143c, 0.5)
   circle.drawCircle(size / 2, size / 2, size * 0.4)
   circle.filters = [
+    new OutlineFilter(0.5, 0xdc143c, 1),
     new GlowFilter({ color: 0xff6347, quality: 1 }),
     new GlowFilter({ color: 0xe9967a, quality: 1 })
   ]
