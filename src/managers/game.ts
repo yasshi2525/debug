@@ -46,12 +46,12 @@ export class GameManager {
     const b = this.field.getBounds()
     const bug = new Bug({
       scene: this.scene,
+      parent: this.layer,
       x: b.left() + g.game.random.generate() * b.width(),
       y: b.top() + g.game.random.generate() * b.height(),
       anchorX: 0.5,
       anchorY: 0.5
     })
-    this.layer.append(bug)
     this.onGenerated.fire(bug)
   }
 }

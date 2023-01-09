@@ -16,8 +16,7 @@ describe('attackManager', () => {
 
   beforeEach(async () => {
     scene = await load()
-    layer = new g.E({ scene, tag: 'attacker' })
-    scene.append(layer)
+    layer = new g.E({ scene, tag: 'attacker', parent: scene })
     field = new RectangleField({ initialBounds: new Bounds(0, 0, 100, 100) })
     manager = new AttackManager({ scene, field, layer })
     attacker = layer.children![1] as Attacker
@@ -43,7 +42,7 @@ describe('attackManager', () => {
     expect(attacker.frameNumber).toBeGreaterThan(0)
   })
 
-  it('叩き終わるとそのときいた虫が消える', () => {
+  it('叩き終わるとそのときいた虫が消え、得点が入る', () => {
     const target = new Bug({ scene, x: 50, y: 50 })
     manager.addBug(target)
 

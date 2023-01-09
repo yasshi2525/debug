@@ -11,8 +11,7 @@ describe('gameManager', () => {
 
   beforeEach(async () => {
     scene = await load()
-    layer = new g.E({ scene })
-    scene.append(layer)
+    layer = new g.E({ scene, parent: scene })
     field = new RectangleField({ initialBounds: { x: 0, y: 0, width: 100, height: 100 } })
   })
 

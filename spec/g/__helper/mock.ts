@@ -9,4 +9,7 @@ export const prepare = () => {
       height: 100
     })
   )
+  jest.spyOn(moduleResourceManager, 'text').mockImplementation(() =>
+    ({ data: '{}' } as g.TextAsset)
+  )
 }

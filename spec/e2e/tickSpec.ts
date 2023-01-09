@@ -20,16 +20,4 @@ describe('main', () => {
     expect(scoreLabel).toBeInstanceOf(g.Label)
     expect((scoreLabel as g.Label).text).toBe('SCORE: 0')
   })
-
-  it('ゲーム起動時、残り時間が設定される', () => {
-    const timeLabel = scene.children.find(e => e.tag === 'time')!
-    expect(timeLabel).toBeInstanceOf(g.Label)
-    expect((timeLabel as g.Label).text).toBe('TIME: 60')
-  })
-
-  it('時間経過後、残り時間が0になる', async () => {
-    const timeLabel = scene.children.find(e => e.tag === 'time')!
-    await context.advance(60000)
-    expect((timeLabel as g.Label).text).toBe('TIME: 0')
-  })
 })

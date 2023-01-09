@@ -5,6 +5,7 @@ import { Bounds } from './utils/bounds'
 import { FieldManager } from './managers/field'
 import { FieldCollision } from './geo/collision'
 import { AttackManager } from './managers/attack'
+import { TimerView } from './views/timer'
 
 declare const window: RPGAtsumaruWindow
 
@@ -12,7 +13,7 @@ export function main (param: GameMainParameterObject): void {
   const scene = new g.Scene({
     game: g.game,
     name: 'main',
-    assetPaths: ['/assets/main/**/*']
+    assetPaths: ['/assets/shared/**/*', '/assets/main/**/*']
   })
 
   let time = 60 // 制限時間
@@ -26,9 +27,7 @@ export function main (param: GameMainParameterObject): void {
     const field = new RectangleField({
       initialBounds: new Bounds(100, 100, 600, 400)
     })
-    const gameLayer = new g.E({ scene, tag: 'game' })
-    scene.append(gameLayer)
-
+    const gameLayer = new g.E({ scene, tag: 'game', parent: scene })
     const gameManager = new GameManager({
       scene,
       layer: gameLayer,
@@ -38,9 +37,7 @@ export function main (param: GameMainParameterObject): void {
     })
 
     const collision = new FieldCollision({ field })
-    const fieldLayer = new g.E({ scene, tag: 'field' })
-    scene.append(fieldLayer)
-
+    const fieldLayer = new g.E({ scene, tag: 'field', parent: scene })
     const fieldManager = new FieldManager({
       layer: fieldLayer,
       field,
@@ -48,14 +45,18 @@ export function main (param: GameMainParameterObject): void {
     })
     fieldManager.init(gameManager)
 
-    const attackerLayer = new g.E({ scene, tag: 'attacker' })
-    scene.append(attackerLayer)
+    const attackerLayer = new g.E({ scene, tag: 'attacker', parent: scene })
     const attackManager = new AttackManager({ scene, field, layer: attackerLayer })
     attackManager.init(gameManager)
+
+    const timerLayer = new g.E({ scene, tag: 'timer', parent: scene })
+    const timer = new TimerView({ scene, layer: timerLayer, initial: time })
+    timer.init()
 
     gameManager.start()
     fieldManager.start()
     attackManager.start()
+    timer.start()
 
     // フォントの生成
     const font = new g.DynamicFont({
@@ -75,36 +76,14 @@ export function main (param: GameMainParameterObject): void {
     })
     scene.append(scoreLabel)
 
-    // 残り時間表示用ラベル
-    const timeLabel = new g.Label({
-      scene,
-      text: 'TIME: 0',
-      font,
-      fontSize: font.size / 2,
-      textColor: 'black',
-      x: 0.65 * g.game.width,
-      tag: 'time'
-    })
-    scene.append(timeLabel)
-
-    const updateHandler = (): void => {
-      if (time <= 0) {
-        // ゲームアツマール環境であればランキングを表示します
-        if (param.isAtsumaru) {
-          const boardId = 1
-          window.RPGAtsumaru.experimental.scoreboards.setRecord(boardId, g.game.vars.gameState.score).then(function () {
-            window.RPGAtsumaru.experimental.scoreboards.display(boardId)
-          })
-        }
-        scene.onUpdate.remove(updateHandler) // カウントダウンを止めるためにこのイベントハンドラを削除します
+    timer.onExpire.add(() => {
+      if (param.isAtsumaru) {
+        const boardId = 1
+        window.RPGAtsumaru.experimental.scoreboards.setRecord(boardId, g.game.vars.gameState.score).then(function () {
+          window.RPGAtsumaru.experimental.scoreboards.display(boardId)
+        })
       }
-      // カウントダウン処理
-      time -= 1 / g.game.fps
-      timeLabel.text = 'TIME: ' + Math.ceil(time)
-      timeLabel.invalidate()
-    }
-    scene.onUpdate.add(updateHandler)
-    // ここまでゲーム内容を記述します
+    })
   })
   g.game.pushScene(scene)
 }

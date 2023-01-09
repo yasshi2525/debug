@@ -17,8 +17,7 @@ describe('fieldManager', () => {
     scene = await load()
     field = new RectangleField({ initialBounds: new Bounds(0, 0, 100, 100) })
     collision = new FieldCollision({ field })
-    layer = new g.E({ scene })
-    scene.append(layer)
+    layer = new g.E({ scene, parent: scene })
   })
 
   afterEach(() => {

@@ -6,8 +6,7 @@ describe('button', () => {
 
   beforeEach(async () => {
     scene = await load()
-    button = new Button({ scene, x: 0, y: 0, width: 100, height: 100 })
-    scene.append(button)
+    button = new Button({ scene, x: 0, y: 0, width: 100, height: 100, parent: scene })
   })
 
   afterEach(() => {
